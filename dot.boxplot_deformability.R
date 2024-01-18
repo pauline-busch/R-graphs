@@ -7,17 +7,30 @@ library(data.table)
 all_Data <- data.table(
   read.xlsx("LoRRca_deformability.xlsx"))
 
-use_Data <- subset(
-  all_Data, shear == 0.53)
+#use_Data <- subset(
+ # all_Data, shear == 0.53)
 
 f.sample <- factor(
-  use_Data$sample, level = c("blank", "CDNB15","CDNB60"))
+  all_Data$sample, level = c("blank", "CDNB15","CDNB60"))
 
-ggplot(data = use_Data,
-       aes(x = f.sample, y = EI)) +
+ggplot(data = all_Data,
+       aes(x = f.sample, 
+           y = EI)) +
   
   geom_boxplot(show.legend = FALSE, aes(fill = sample)) +
   scale_fill_manual(values=c("#f56e6e", "#bf0202", "#d1d1d1"), name ="") +
+  
+  facet_wrap(~factor(shear,
+             level = c(0.3, 0.53, 0.95, 1.69, 3.00, 5.33, 9.49, 16.87, 30),
+             labels = c("0.3 Pa", 
+                        "0.53 Pa", 
+                        "0.95 Pa", 
+                        "1.69 Pa", 
+                        "3.00 Pa", 
+                        "5.33 Pa", 
+                        "9.49 Pa", 
+                        "16.87 Pa", 
+                        "30 Pa")), scales = "free_y") +
   
   geom_point(color = "#000000", size = 2) +
   
@@ -38,4 +51,4 @@ ggplot(data = use_Data,
                      label = "p.signif", method = "wilcox.test")
 
 
-ggsave("result_deformability.tiff", path = "C:/Users/miri/Desktop/R/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 6)
+ggsave("result_deformability.tiff", path = "C:/Users/miri/Desktop/R/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 12)
