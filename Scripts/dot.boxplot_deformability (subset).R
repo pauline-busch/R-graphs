@@ -3,10 +3,9 @@ library(ggpubr)
 library(openxlsx)
 library(data.table)
 
+theme_set(theme_light())
 
-all_Data <- data.table(
-  read.xlsx(r"(data_tables\LoRRca_deformability.xlsx)")
-)
+all_Data <- read.xlsx("C:/Users/miri/Documents/GitHub/R-graphs/data_tables/LoRRca_deformability.xlsx")
 
 use_Data1 <- subset(
   all_Data, shear < 1
@@ -26,8 +25,8 @@ ggplot(data = use_Data1,
   aes(x = f_sample, y = EI)
 ) +
 
-  geom_boxplot(show.legend = FALSE, aes(fill = sample)) +
-  scale_fill_manual(values = c("#d1d1d1", "#9ec0f7", "#5897fc"), name = "") +
+  geom_boxplot(show.legend = FALSE, aes(fill = factor(sample, level = c("blank", "CDNB15", "CDNB60")))) +
+  scale_fill_manual(values = c("#d1d1d1", "#f56e6e", "#bf0202"), name = "") +
   facet_wrap(~factor(
     shear,
     level = c(0.3, 0.53, 0.95),
@@ -54,10 +53,9 @@ ggplot(data = use_Data1,
     y="") +
   
   theme(
-    plot.title = element_blank()
+    plot.title = element_blank(),
+    strip.text = element_text(size = 12)
   ) +
-  
-  theme_light() +
   
   stat_compare_means(comparisons = list(c("CDNB15", "CDNB60"),
                                         c("blank", "CDNB15"),
@@ -70,7 +68,7 @@ ggplot(data = use_Data1,
 
 
 ggsave("result_deformability(A).tiff",
-       path = "Graphs and figures",
+       path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures",
        units = "in",
        dpi = 300,
        compression = "lzw",

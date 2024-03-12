@@ -3,9 +3,9 @@ library(ggpubr)
 library(openxlsx)
 library(data.table)
 
-
+theme_set(theme_light())
 all_Data <- data.table(
-  read.xlsx("Microscopy_depletion.xlsx"))
+  read.xlsx("C:/Users/miri/Documents/GitHub/R-graphs/data_tables/Microscopy_depletion.xlsx"))
 
 type = factor(all_Data$CellType, level = c("Discocyte", "Stomatocyte", "kA"))
 
@@ -30,10 +30,9 @@ ggplot(data = all_Data,
     y="") +
   
   theme(
-    plot.title = element_blank()
+    plot.title = element_blank(),
+    strip.text = element_text(size = 12)
   ) +
-  
-  theme_light() +
   
   stat_compare_means(comparisons = list(c("control","CDNB15"),
                                         c("control","CDNB60"),
@@ -41,5 +40,5 @@ ggplot(data = all_Data,
                      label = "p.signif", method = "wilcox.test")
 
 
-ggsave("result_depletion.tiff", path = "C:/Users/Rickman/Documents/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 6)
+ggsave("result_depletion.tiff", path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 6)
 
