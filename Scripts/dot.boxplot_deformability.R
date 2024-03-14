@@ -51,4 +51,4 @@ ggplot(data = all_Data,
                      label = "p.signif", method = "wilcox.test")
 
 
-ggsave("result_deformabilityy.tiff", path = "C:/Users/miri/Desktop/R/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 12)
+ggsave("result_deformabilityy.tiff", path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 12)
