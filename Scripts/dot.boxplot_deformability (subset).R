@@ -18,15 +18,15 @@ use_Data1 <- subset(
 #   all_Data, shear > 6)
 
 f_sample <- factor(
-  use_Data1$sample, level = c("blank", "CDNB15", "CDNB60")
+  use_Data1$sample, level = c("blank", "CDNB")
 )
 
 ggplot(data = use_Data1,
   aes(x = f_sample, y = EI)
 ) +
 
-  geom_boxplot(show.legend = FALSE, aes(fill = factor(sample, level = c("blank", "CDNB15", "CDNB60")))) +
-  scale_fill_manual(values = c("#d1d1d1", "#f56e6e", "#bf0202"), name = "") +
+  geom_boxplot(show.legend = FALSE, aes(fill = factor(sample, level = c("blank", "CDNB")))) +
+  scale_fill_manual(values = c("#d1d1d1", "#bf0202"), name = "") +
   facet_wrap(~factor(
     shear,
     level = c(0.3, 0.53, 0.95),
@@ -55,22 +55,13 @@ ggplot(data = use_Data1,
   theme(
     plot.title = element_blank(),
     strip.text = element_text(size = 12)
-  ) +
-  
-  stat_compare_means(comparisons = list(c("CDNB15", "CDNB60"),
-                                        c("blank", "CDNB15"),
-                                        c("blank", "CDNB60")),
-                     label = "p.signif",
-                     method = "wilcox.test",
-                     paired = TRUE,
-                     zero.method = "pratt",
-                     exact = FALSE)
+  ) 
 
 
-ggsave("result_deformability(A).tiff",
+ggsave("result_deformability(xyz).tiff",
        path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures",
        units = "in",
        dpi = 300,
        compression = "lzw",
-       width = 8,
-       height = 6)
+       width = 3,
+       height = 5)
