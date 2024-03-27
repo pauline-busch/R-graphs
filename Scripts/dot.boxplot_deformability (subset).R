@@ -5,7 +5,7 @@ library(data.table)
 
 theme_set(theme_light())
 
-all_Data <- read.xlsx("C:/Users/miri/Documents/GitHub/R-graphs/data_tables/LoRRca_deformability.xlsx")
+all_Data <- read.xlsx("LoRRca_deformability.xlsx")
 
 use_Data1 <- subset(
   all_Data, shear < 1
@@ -55,11 +55,14 @@ ggplot(data = use_Data1,
   theme(
     plot.title = element_blank(),
     strip.text = element_text(size = 12)
-  ) 
+  ) +
+  
+  stat_compare_means(comparisons = list(c("blank","CDNB")),
+                     label = "p.signif", method = "wilcox.test")
 
 
 ggsave("result_deformability(xyz).tiff",
-       path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures",
+       path = "C:/Users/paubus/OneDrive - Universität Zürich UZH/Documents/GitHub/R-graphs/Graphs and figures",
        units = "in",
        dpi = 300,
        compression = "lzw",
