@@ -48,13 +48,13 @@ ggplot(data = use_Data1,
   geom_point(color = "#000000", size = 2) +
   
   labs(
-    # title = (""), 
+    title = ("RBC deformability (low shear stress)"), 
     x="", 
     y="") +
   
   theme(
-    plot.title = element_blank(),
-    strip.text = element_text(size = 12)
+    strip.text = element_text(size = 12),
+    plot.title = element_text(hjust=0.5)
   ) +
   
   stat_compare_means(comparisons = list(c("blank","CDNB")),
@@ -62,9 +62,9 @@ ggplot(data = use_Data1,
 
 
 ggsave("result_deformability(xyz).tiff",
-       path = "C:/Users/paubus/OneDrive - Universität Zürich UZH/Documents/GitHub/R-graphs/Graphs and figures",
+       path = "~/GitHub/R-graphs/Graphs and figures",
        units = "in",
        dpi = 300,
        compression = "lzw",
-       width = 3,
+       width = 5,
        height = 5)

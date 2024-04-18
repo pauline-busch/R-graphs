@@ -12,15 +12,17 @@ PS <- read.xlsx("LoRRca_deformability_2.xlsx")
 
 ggplot(PS, aes(shearstress, EI)) + 
   
-  geom_errorbar(
+  geom_point(
     
-    aes(
-      ymin = EI - SEM, 
-      ymax = EI + SEM,
-      width = 0.2,
-      alpha = 0.2,
-      col = factor(sample, levels = c("blank", "CDNB60"))
-    )
+    aes(col = factor(sample, levels = c("blank", "CDNB60"))),
+    size = 0.75
+    
+  ) +
+  
+  scale_color_manual(
+    
+    values = c("#bababa", "#bf0202"),
+    labels = c("blank", "CDNB [2mM]")
     
   ) +
   
@@ -32,26 +34,24 @@ ggplot(PS, aes(shearstress, EI)) +
     
   ) +
   
-  geom_point(
+  scale_linetype_manual(
     
-    aes(col = factor(sample, levels = c("blank", "CDNB60"))),
-    size = 0.75
+    values = c("solid", "dashed"),
+    labels = c("blank", "CDNB [2mM]")
     
   ) +
   
-  scale_color_manual(
-    
-    values = c("#bababa", "#bf0202")
-    
-  ) +
   
   labs(
     x = "shear stress [Pa]", 
-    y = "Elongation index"
+    y = "Elongation index",
+    title = "RBC deformability",
+    linetype = "Treatment",
+    col = "Treatment"
     
   ) +
   
-  theme(legend.position = "NA")
+  theme(plot.title = element_text(hjust=0.5))
   
 
-ggsave("try2.tiff", path = "C:/Users/paubus/OneDrive - Universität Zürich UZH/Documents/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 6, height = 4)
+ggsave("try2.tiff", path = "~/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 6, height = 4)
