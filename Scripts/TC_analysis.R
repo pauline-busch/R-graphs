@@ -8,15 +8,15 @@ library(car)
 
 
 Data <- data.table(
-  read.xlsx("TC_analysis.xlsx"))
+  read.xlsx("analysis.xlsx"))
 
 f.type <- factor(
-  Data$type, level = c("blank", "CDNB","Diamide", "NEM")
+  Data$type, level = c("blank", "CDNB","Diamide")
   )
 
 ggplot(
   data = Data,
-  aes(x = f.type, y = Data$max_RI)
+  aes(x = f.type, y = Data$`SA.(um^2)`)
   ) +
   
   geom_boxplot(
@@ -35,9 +35,9 @@ ggplot(
   
   
   labs(
-    title = ("Maximum refractive index"),
+    title = ("Surface area"),
     x="", 
-    y="max_RI") +
+    y="SA [um^2]") +
   
   # ylim(NA, 700) +
   
@@ -48,23 +48,23 @@ ggplot(
   ) 
 
 
-ggsave("TC_RI.tiff", path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 8, height = 6)
+ggsave("SA.tiff", path = "C:/Users/paubus/OneDrive - Universität Zürich UZH/Documents/Pauline Busch/Experimente/Microscopy/20240820 Tomocube/Analysis graph", units = "in", dpi=300, compression = 'lzw', width = 8, height = 6)
 
 #preparation for statistical evaluation
-grouped_data <- split(Data$`cv(fL)`, Data$type)
-shapiro_results <- lapply(grouped_data, shapiro.test)
-levene_result <- leveneTest(`cv(fL)` ~ factor(type), data = Data)
+grouped_data <- split(Data$Max.RI, Data$type)
+#shapiro_results <- lapply(grouped_data, shapiro.test)
+levene_result <- leveneTest(Max.RI ~ factor(type), data = Data)
 
 #statistical evaluation
 ggbetweenstats(
   data = Data,
   x = type,
-  y = `cv(fL)`,
+  y = `SA.(um^2)`,
   type = "nonparametric",  # Set to nonparametric to use Kruskal-Wallis test
   pairwise.comparisons = TRUE,            # Perform post-hoc pairwise comparisons (Dunn's test)
   pairwise.display = "significant",    # Show only significant comparisons (or "all")
   pairwise.annotation = "p.value",        # Annotate the plot with p-values
-  title = "Volume"
+  title = "Surface area"
 )
-   ggsave("TCstat_volume2.tiff", path = "C:/Users/miri/Documents/GitHub/R-graphs/Graphs and figures", units = "in", dpi=300, compression = 'lzw', width = 12, height = 8)
+   ggsave("stat_SA.tiff", path = "C:/Users/paubus/OneDrive - Universität Zürich UZH/Documents/Pauline Busch/Experimente/Microscopy/20240820 Tomocube/Analysis graph", units = "in", dpi=300, compression = 'lzw', width = 12, height = 8)
 
